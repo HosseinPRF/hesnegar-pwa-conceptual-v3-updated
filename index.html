@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>حس‌نگار — ثبت و تنظیم احساس (PWA آفلاین)</title>
+  <meta name="description" content="ثبت سریع و تحلیل عمیق احساس‌ها + جعبه ابزار تنظیم هیجان، کاملاً آفلاین روی دستگاه شما">
+
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="appbar">
+    <div class="appbar-row">
+      <div class="brand">
+        <img src="./icon.svg" alt="حس‌نگار" class="logo">
+        <div>
+          <h1>حس‌نگار</h1>
+          <div class="subtitle">ثبت سریع • تحلیل عمیق • آفلاین</div>
+        </div>
+      </div>
+
+      <nav class="toplinks" aria-label="میانبرها">
+        <a class="topicon" href="./achievements.html" title="دستاوردها و موهبت‌ها">
+          <span class="sr-only">دستاوردها</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M7 6H5a2 2 0 0 0 2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M17 6h2a2 2 0 0 1-2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </a>
+
+        <a class="topicon" href="./principles.html" title="اصول زندگی من">
+          <span class="sr-only">اصول</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 7h6M9 11h6M9 15h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </a>
+
+        <a class="topicon" href="./improvements.html" title="نقاط بهبود من">
+          <span class="sr-only">بهبود</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 3l2.2 6.8H21l-5.5 4 2.1 6.7L12 16.8 6.4 20.5 8.5 13.8 3 9.8h6.8L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </nav>
+
+      <div class="actions">
+        <details class="menu">
+          <summary class="iconpill" title="داده‌ها و تنظیمات" aria-label="داده‌ها و تنظیمات">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 6.5h.01M12 12h.01M12 17.5h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </summary>
+          <div class="menu-panel" role="menu">
+            <button id="btnExport" class="btn menuitem" role="menuitem">خروجی JSON ⤓</button>
+            <button id="btnImport" class="btn menuitem" role="menuitem">ورود JSON ⤒</button>
+            <input id="fileImport" type="file" accept="application/json" hidden>
+            <button id="btnReset" class="btn danger menuitem" role="menuitem">پاک‌سازی داده‌ها</button>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Home -->
+    <section class="screen" data-screen="home">
+      <div class="hero">
+        <h2>امروز چی توی تو فعال شده؟</h2>
+        <p class="helper">هدف این اپ «کنترلِ زورکی» نیست؛ هدف اینه حس رو <b>به خودآگاهی بیاری</b>، منشأش رو بفهمی، و یک <b>انتخابِ کوچک</b> انجام بدی که حالِ تو رو بهتر و مسیرت رو سالم‌تر کنه.</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>ثبت سریع (۶۰–۹۰ ثانیه)</h3>
+          <p class="helper">وقتی وسط کار/جمع هستی و می‌خوای سریع جلوی گیرکردن رو بگیری.</p>
+          <button class="btn primary" id="goQuick">شروع ثبت سریع</button>
+        </div>
+        <div class="card">
+          <h3>تحلیل عمیق (۷–۱۲ دقیقه)</h3>
+          <p class="helper">وقتی می‌خوای دقیق بفهمی «چی شد؟ چرا؟ نیازم چی بود؟» و یک پلن عملی بسازی.</p>
+          <button class="btn primary" id="goDeep">شروع تحلیل عمیق</button>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>جعبه ابزار تنظیم</h3>
+          <p class="helper">تکنیک‌های کوتاه علمی (بدن/ذهن/خودشفقت/ACT) با انتخاب هوشمند.</p>
+          <button class="btn" id="goToolkit">باز کردن ابزارها</button>
+        </div>
+        <div class="card">
+          <h3>سوابق و الگوها</h3>
+          <p class="helper">همه‌چیز فقط روی دستگاه شماست. اینجا می‌تونی رکوردها رو ببینی، کپی/حذف کنی و چند الگوی ساده بگیری.</p>
+          <button class="btn" id="goHistory">مشاهده سوابق</button>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>فلوی فوری (۲–۴ دقیقه)</h3>
+          <p class="helper">وقتی شدت بالاست یا ذهن گیر کرده، لازم نیست بین «ثبت سریع/تحلیل» تصمیم بگیری. یکی از این مسیرهای آماده رو بزن و مرحله‌به‌مرحله جلو برو.</p>
+          <div class="row wrap">
+            <button class="btn" id="goFlowPanic">پانیک/اضطراب</button>
+            <button class="btn" id="goFlowAnger">خشم</button>
+            <button class="btn" id="goFlowRumination">نشخوار</button>
+            <button class="btn" id="goFlowShame">شرم</button>
+            <button class="btn" id="goFlowSavor">لحظه خوب ✨</button>
+            <button class="btn" id="goFlowSadness">غم/بی‌انگیزگی</button>
+            <button class="btn" id="goFlowUrge">وسوسه/اجبار</button>
+            <button class="btn" id="goFlowConflict">تعارض رابطه‌ای</button>
+          </div>
+          <div class="smallnote">این مسیرها «درمان» نیستند؛ فقط کمک می‌کنند از قفل‌شدن لحظه‌ای خارج بشی و یک انتخاب کوچک انجام بدی.</div>
+        </div>
+
+        <div class="card">
+          <h3>هدف هفتگی و پیشرفت</h3>
+          <div id="wkWidget" class="helper">—</div>
+          <div class="progress" aria-label="پیشرفت هفتگی">
+            <div id="wkBar" class="progress-bar" style="width:0%"></div>
+          </div>
+          <div class="row wrap" style="margin-top:10px">
+            <button class="btn" id="goWeekly">تنظیم هدف</button>
+          </div>
+          <div class="smallnote">هدف هفتگی یعنی «چند بار در هفته یک تمرین/تنظیم انجام بدم» (حتی ۲ دقیقه).</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <details>
+          <summary>راهنمای خیلی کوتاهِ مدل</summary>
+          <div class="helper">
+            • <b>واقعیت</b> ≠ <b>داستان ذهن</b> (CBT/ACT) — جداشون کن.<br>
+            • <b>نیاز</b> پشتِ حس‌هاست (تئوری انتخاب: تعلق/ارزشمندی/آزادی/تفریح/امنیت).<br>
+            • یک قدم مهم: «این وضعیت اول <b>تنظیم هیجان</b> می‌خواد یا <b>حل مسئله</b>؟» (اگر شدت بالاست اول تنظیم).<br>
+            • <b>آسیب‌پذیری روز</b> (کم‌خوابی/گرسنگی/تنهایی/…) می‌تونه شدت رو چند برابر کنه؛ اول یک چیز کوچک را اصلاح کن.<br>
+            • برای تصمیم بهتر، اقدام نهایی را به <b>اصول زندگی / نقاط بهبود / موهبت‌ها</b> وصل کن (داخل خود مسیرها هست).<br>
+            • اگر شدت بالاست (۶ به بالا)، اول <b>بدن</b> را تنظیم کن، بعد تحلیل.<br>
+            • «انتخاب» یعنی یک قدم کوچک قابل کنترل (فکر/عمل) نه جنگیدن با احساس.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Quick: Step 1 -->
+    <section class="screen hidden" data-screen="quick-1">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">ثبت سریع • ۱/۳</div>
+      </div>
+      <h2>اسم حس + شدت</h2>
+      <p class="helper">۱–۳ احساس انتخاب کن. (اگر نبود، اضافه کن)</p>
+
+      <h3>هدف این ثبت</h3>
+      <p class="helper">هدف کمک می‌کنه ابزارها دقیق‌تر پیشنهاد بشن و آخرش یک خروجی کاربردی بگیری.</p>
+      <div id="qcGoalChips" class="chips"></div>
+      <details class="micro">
+        <summary>هدف‌ها یعنی چی؟</summary>
+        <div class="helper">«آرام شدن سریع» یعنی اول بدن را تنظیم کنیم. «فهمیدن ریشه» یعنی بعد از آرام‌شدن، واقعیت/داستان و نیازها را بررسی کنیم. «رابطه/مرز» یعنی خروجی نهایی‌مان یک جمله درخواست/مرز باشد.</div>
+      </details>
+
+      <h3>اول تنظیم هیجان یا حل مسئله؟</h3>
+      <p class="helper">این انتخاب کمک می‌کند مسیر را درست شروع کنی. اگر شدت بالاست، معمولاً «اول تنظیم هیجان» امن‌تر است.</p>
+      <div id="qcModeChips" class="chips"></div>
+      <details class="micro">
+        <summary>این گزینه‌ها دقیقاً یعنی چی؟</summary>
+        <div class="helper">
+          • <b>اول تنظیم هیجان</b>: هدف این نیست احساس را حذف کنی؛ هدف اینه شدت پایین بیاد تا تصمیم بهتر بگیری.<br>
+          • <b>حل مسئله بیرونی</b>: مشکل بیرونی مشخصه (کار/رابطه/پول…) و دنبال یک قدم عملی هستی.<br>
+          • <b>هر دو</b>: اول یک تنظیم کوتاه (۹۰ ثانیه)، بعد یک اقدام کوچک کم‌ریسک.<br>
+          • <b>نامشخص</b>: اگر مطمئن نیستی، همون «تنظیم هیجان» را شروع کن.
+        </div>
+      </details>
+
+      <h3>چک سریع آسیب‌پذیری (اختیاری • ۱۵ ثانیه)</h3>
+      <p class="helper">گاهی شدت احساس «به خاطر شرایط بدن/روز» بیشتر می‌شه. چند موردی که امروز فعاله رو انتخاب کن تا علت روشن‌تر شه.</p>
+      <div id="qcVulnChips" class="chips"></div>
+
+      <div id="qcEmotionChips" class="chips"></div>
+      <div class="inline-add">
+        <input id="qcEmotionInput" type="text" placeholder="افزودن احساس دلخواه...">
+        <button id="qcEmotionAdd" class="btn">افزودن</button>
+      </div>
+
+      <div id="qcEmotionSelected" class="selected">— هنوز چیزی انتخاب نشده.</div>
+
+      <label class="field">
+        <span>حس غالب از نظر تو</span>
+        <select id="qcValence">
+          <option value="bad">بد/سنگین</option>
+          <option value="good">خوب/سبک</option>
+          <option value="neutral">خنثی/نامشخص</option>
+        </select>
+      </label>
+
+      
+      <div class="grid">
+        <label class="field">
+          <span>شدت (۰ تا ۱۰)</span>
+          <input id="qcIntensity" type="range" min="0" max="10" value="5">
+          <div class="rangeRow"><span id="qcIntensityVal" class="badge">5</span><span class="muted">۰ آرام • ۱۰ خیلی شدید</span></div>
+        </label>
+        <label class="field">
+          <span>بدن کجا حس می‌کنی؟</span>
+          <select id="qcBody">
+            <option value="">— انتخاب کن —</option>
+            <option>گلو</option>
+            <option>سینه</option>
+            <option>شکم</option>
+            <option>سر</option>
+            <option>فک/صورت</option>
+            <option>دست/پا</option>
+            <option>کل بدن</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="grid">
+        <label class="field">
+          <span>این تمرین چقدر کمک کرد؟ (۰ تا ۵)</span>
+          <input id="qcHelpfulness" type="range" min="0" max="5" value="3">
+          <div class="rangeRow"><span id="qcHelpfulnessVal" class="badge">3</span><span class="muted">۰ = هیچ • ۵ = خیلی</span></div>
+        </label>
+        <label class="field">
+          <span>چقدر سخت بود؟ (۰ تا ۵)</span>
+          <input id="qcDifficulty" type="range" min="0" max="5" value="2">
+          <div class="rangeRow"><span id="qcDifficultyVal" class="badge">2</span><span class="muted">۰ = راحت • ۵ = سخت</span></div>
+        </label>
+      </div>
+      <details class="micro">
+        <summary>این دو عدد به چه درد می‌خوره؟</summary>
+        <div class="helper">کمک می‌کنه بعداً بفهمی «کدوم تکنیک برای تو با کمترین سختی، بیشترین اثر رو داشته». این یعنی شخصی‌سازی واقعی.</div>
+      </details>
+
+      <div class="nav-row">
+        <div></div>
+        <button class="btn primary" id="toQuick2">ادامه</button>
+      </div>
+    </section>
+
+    <!-- Quick: Step 2 -->
+    <section class="screen hidden" data-screen="quick-2">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">ثبت سریع • ۲/۳</div>
+      </div>
+      <h2>تریگر + جمله ذهن</h2>
+      <label class="field">
+        <span>چی جرقه زد؟ (تریگر)</span>
+        <textarea id="qcTrigger" rows="2" placeholder="مثلاً: دیدم دوستم فلان كار رو كرده..."></textarea>
+      </label>
+
+      <label class="field">
+        <span>ذهنم داره چی می‌گه؟ (یک جمله)</span>
+        <input id="qcMind" type="text" placeholder="مثلاً: من عقب افتادم.">
+      </label>
+
+      <label class="field">
+        <span>فکر آسیب به خودت/دیگران داری؟</span>
+        <select id="qcHarm">
+          <option value="no">نه</option>
+          <option value="unsure">نامشخص/ترجیح می‌دم نگم</option>
+          <option value="yes">بله</option>
+        </select>
+        <small class="muted">اگر «بله» یا شدت خیلی بالاست، یک پیام ایمنی نمایش داده می‌شه.</small>
+      </label>
+
+      <div id="qcSafety" class="card hidden"></div>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn primary" id="toQuick3">ادامه</button>
+      </div>
+    </section>
+
+    <!-- Quick: Step 3 -->
+    <section class="screen hidden" data-screen="quick-3">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">ثبت سریع • ۳/۳</div>
+      </div>
+      <h2>تنظیم ۶۰ ثانیه‌ای + قدم بعدی</h2>
+      <p class="helper">یک تکنیک کوتاه انتخاب کن. (می‌تونی بعداً تحلیل عمیق هم انجام بدی)</p>
+
+      <div id="qcToolChips" class="chips"></div>
+      <div class="card" id="qcToolInfo"></div>
+
+      <div class="grid">
+        <label class="field">
+          <span>تمرین را همین الان انجام دادم؟</span>
+          <select id="qcDidTool">
+            <option value="yes">بله</option>
+            <option value="no">نه (فقط انتخاب کردم)</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>مدت تمرین (دقیقه)</span>
+          <input id="qcMinutes" type="number" min="0" max="60" value="2">
+          <small class="muted">برای یادگیری خودت: کدام تکنیک در چه مدت بهتر جواب داد؟</small>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>قدم بعدیِ کوچک (۲–۱۰ دقیقه)</span>
+        <input id="qcNextAction" type="text" placeholder="مثلاً: ۱۰ دقیقه ژورنال، یا پیاده‌روی کوتاه...">
+      </label>
+
+      <div class="card">
+        <h3>یادآوری هویت (اختیاری ولی خیلی اثرگذار)</h3>
+        <p class="helper">اینجا انتخاب می‌کنی این اقدام با کدام <b>اصل زندگی</b> همسوست، کدام <b>نقطه بهبود</b> را تمرین می‌کنی، و یک <b>موهبت/دستاورد</b> برای تقویت حس توانمندی یادآوری می‌کنی. همین یادآوری کوچک، کیفیت تصمیم را بالا می‌برد.</p>
+
+        <h4>اصل زندگی</h4>
+        <div id="qcPrincipleChips" class="chips"></div>
+        <div id="qcPrincipleSelected" class="selected">—</div>
+        <div class="inline-add">
+          <input id="qcPrincipleInput" type="text" placeholder="افزودن اصل جدید (اختیاری)...">
+          <button id="qcPrincipleAdd" class="btn">افزودن</button>
+        </div>
+        <div class="smallnote">مثال: «صداقت»، «سلامت»، «مرزبندی محترمانه»، «پیشرفت آهسته ولی پایدار»</div>
+
+        <h4 style="margin-top:12px">نقطه بهبود</h4>
+        <div id="qcImprovementChips" class="chips"></div>
+        <div id="qcImprovementSelected" class="selected">—</div>
+        <div class="inline-add">
+          <input id="qcImprovementInput" type="text" placeholder="افزودن نقطه بهبود (اختیاری)...">
+          <button id="qcImprovementAdd" class="btn">افزودن</button>
+        </div>
+        <div class="smallnote">مثال: «کمتر مقایسه کنم»، «زودتر نه بگم»، «تعویق نکنم»</div>
+
+        <h4 style="margin-top:12px">موهبت/دستاورد</h4>
+        <div id="qcAchievementChips" class="chips"></div>
+        <div id="qcAchievementSelected" class="selected">—</div>
+        <div class="inline-add">
+          <input id="qcAchievementInput" type="text" placeholder="افزودن موهبت/دستاورد (اختیاری)...">
+          <button id="qcAchievementAdd" class="btn">افزودن</button>
+        </div>
+        <div class="smallnote">مثال: «من توانایی برگشتن دارم»، «قبلاً هم از پسش بر اومدم»</div>
+
+        <div class="smallnote muted">اگر ترجیح می‌دی این لیست‌ها را جدا مدیریت کنی، از آیکون‌های بالای صفحه استفاده کن.</div>
+      </div>
+
+      <h3>وضعیت اقدام</h3>
+      <div id="qcActionPills" class="pills"></div>
+      <label class="field hidden" id="qcBlockerWrap">
+        <span>اگر انجام نشد، مانع چی بود؟ (اختیاری)</span>
+        <input id="qcBlocker" type="text" placeholder="مثلاً: خستگی، زمان کم، ترس از پیام دادن...">
+      </label>
+
+      <label class="field">
+        <span>شدت بعد از تنظیم (۰ تا ۱۰)</span>
+        <input id="qcAfter" type="range" min="0" max="10" value="4">
+        <div class="rangeRow"><span id="qcAfterVal" class="badge">4</span><span class="muted">برای یادگیری خودت ثبت کن</span></div>
+      </label>
+
+      <div class="row wrap">
+        <button class="btn" id="qcCopy">کپی خلاصه</button>
+        <button class="btn" id="qcShare">اشتراک</button>
+        <button class="btn primary" id="qcSave">ذخیره</button>
+      </div>
+
+      <pre id="qcSummary" class="summary"></pre>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn" id="qcGoHome">خانه</button>
+      </div>
+    </section>
+
+    <!-- Deep: Step 1 -->
+    <section class="screen hidden" data-screen="deep-1">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">تحلیل عمیق • ۱/۵</div>
+      </div>
+      <h2>مشاهده‌گری دقیق</h2>
+
+      <h3>هدف این تحلیل</h3>
+      <p class="helper">هدف کمک می‌کند خروجی آخر (تکنیک/پلن/مرز) واضح‌تر باشد.</p>
+      <div id="ddGoalChips" class="chips"></div>
+
+      <h3>این وضعیت بیشتر به چی نیاز داره؟</h3>
+      <p class="helper">اگر شدت بالا یا نشخوار فعاله، معمولاً اول «تنظیم هیجان» بهتر جواب می‌ده و بعدش حل مسئله.</p>
+      <div id="ddModeChips" class="chips"></div>
+
+      <h3>چک آسیب‌پذیری روز (اختیاری)</h3>
+      <p class="helper">این‌ها علت‌های «نامرئی» شدت هستند. انتخاب‌شان کمک می‌کند به جای سرزنش، واقع‌بینانه‌تر عمل کنی.</p>
+      <div id="ddVulnChips" class="chips"></div>
+      <div class="grid">
+        <label class="field">
+          <span>احساس(ها)</span>
+          <input id="ddEmotions" type="text" placeholder="مثلاً: حسادت، شرم، اضطراب">
+          <small class="muted">می‌تونی با کاما جدا کنی</small>
+        </label>
+        <label class="field">
+          <span>شدت (۰ تا ۱۰)</span>
+          <input id="ddIntensity" type="range" min="0" max="10" value="6">
+          <div class="rangeRow"><span id="ddIntensityVal" class="badge">6</span><span class="muted">۰ آرام • ۱۰ خیلی شدید</span></div>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>فکر آسیب به خودت/دیگران داری؟</span>
+        <select id="ddHarm">
+          <option value="no">نه</option>
+          <option value="unsure">نامشخص/ترجیح می‌دم نگم</option>
+          <option value="yes">بله</option>
+        </select>
+        <small class="muted">اگر «بله» یا شدت خیلی بالاست، یک پیام ایمنی نمایش داده می‌شه.</small>
+      </label>
+
+      <div id="ddSafety" class="card hidden"></div>
+      <div class="grid">
+        <label class="field">
+          <span>بدن کجا حس می‌کنی؟</span>
+          <select id="ddBody">
+            <option value="">— انتخاب کن —</option>
+            <option>گلو</option>
+            <option>سینه</option>
+            <option>شکم</option>
+            <option>سر</option>
+            <option>فک/صورت</option>
+            <option>دست/پا</option>
+            <option>کل بدن</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>تریگر (چی جرقه زد؟)</span>
+          <input id="ddTrigger" type="text" placeholder="مثلاً: حرف فلاني">
+        </label>
+      </div>
+
+      <div class="nav-row">
+        <div></div>
+        <button class="btn primary" id="toDeep2">ادامه</button>
+      </div>
+    </section>
+
+    <!-- Deep: Step 2 -->
+    <section class="screen hidden" data-screen="deep-2">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">تحلیل عمیق • ۲/۵</div>
+      </div>
+      <h2>واقعیت vs داستان ذهن</h2>
+      <div class="grid">
+        <label class="field">
+          <span>واقعیتِ قابل مشاهده</span>
+          <textarea id="ddFacts" rows="3" placeholder="چه اتفاقی افتاد؟ بدون تفسیر..."></textarea>
+        </label>
+        <label class="field">
+          <span>داستان/تعبیر ذهن</span>
+          <textarea id="ddStory" rows="3" placeholder="یعنی چی درباره من/دنیا؟"></textarea>
+        </label>
+      </div>
+
+      <h3>دام‌های شناختی (اختیاری)</h3>
+      <p class="helper">اگر بفهمی ذهن از چه «دامی» استفاده می‌کنه، خیلی راحت‌تر می‌تونی فکر متعادل‌تر بسازی. ۱–۲ مورد انتخاب کن.</p>
+      <div id="ddDistortionChips" class="chips"></div>
+
+      <label class="field">
+        <span>یک فکر متعادل‌تر (جایگزین)</span>
+        <input id="ddBalancedThought" type="text" placeholder="مثلاً: ممکنه امروز عقب افتاده باشم، ولی ارزش من ثابت می‌مونه و می‌تونم یک قدم کوچک بردارم.">
+        <small class="muted">هدف: نه مثبت‌بافی؛ فقط واقع‌بینی + مهربانی.</small>
+      </label>
+
+      <details class="micro">
+        <summary>اگر شدت خیلی بالاست چی؟</summary>
+        <div class="helper">اگر شدت ۷+ است یا بدن خیلی فعال است، قبل از نوشتن طولانی یک تمرین ۶۰–۱۸۰ ثانیه‌ای (تنفس/گراندینگ) انجام بده. بعد ادامه بده.</div>
+      </details>
+
+      <div class="card">
+        <div class="helper"><b>نکته:</b> خیلی وقت‌ها احساس شدید از «داستان» تغذیه می‌کنه، نه از خود واقعیت.</div>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn primary" id="toDeep3">ادامه</button>
+      </div>
+    </section>
+
+    <!-- Deep: Step 3 -->
+    <section class="screen hidden" data-screen="deep-3">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">تحلیل عمیق • ۳/۵</div>
+      </div>
+      <h2>احساس زیرین + نیاز</h2>
+      <div class="grid">
+        <label class="field">
+          <span>احساس(های) زیرین (اگر هست)</span>
+          <input id="ddUnder" type="text" placeholder="مثلاً: ترس، شرم، غم">
+        </label>
+        <label class="field">
+          <span>نشخوار ذهنی/گیرکردن بود؟</span>
+          <select id="ddRumination">
+            <option>نامشخص</option>
+            <option>بله</option>
+            <option>خیر</option>
+          </select>
+        </label>
+      </div>
+
+      <h3>نیاز فعال‌شده (تئوری انتخاب)</h3>
+      <p class="helper">حداکثر ۲ مورد انتخاب کن.</p>
+      <div id="ddNeedChips" class="chips needs"></div>
+      <div id="ddNeedHints" class="hints"></div>
+
+      <div class="card" id="ddNeedScripts">
+        <b>جمله‌های پیشنهادی برای نیازها</b>
+        <div class="helper">اول ۱–۲ نیاز را انتخاب کن تا «درخواست سالم» و «مرز سالم» پیشنهاد شود.</div>
+      </div>
+
+      <div class="card">
+        <h3>راهبرد من برای تامین نیاز (برای شکستن الگو)</h3>
+        <p class="helper">خیلی وقت‌ها مشکل اصلی «احساس» نیست؛ الگوی رفتاری ما برای تامین نیاز است. اینجا فقط آگاه می‌شی و یک جایگزین سالم‌تر می‌سازی.</p>
+
+        <h4>من معمولاً این نیاز را چطور تامین می‌کنم؟ (راهبرد قدیمی)</h4>
+        <div id="ddOldStrategyChips" class="chips"></div>
+        <label class="field">
+          <span>اگر خواستی توضیح کوتاه بده (اختیاری)</span>
+          <input id="ddOldStrategyNote" type="text" placeholder="مثلاً: وقتی می‌ترسم، مکالمه را قطع می‌کنم...">
+        </label>
+
+        <div id="ddNeedStrategyHint"></div>
+
+        <label class="field">
+          <span>راهبرد جایگزین سالم‌تر (کوچک و قابل انجام)</span>
+          <input id="ddNewStrategy" type="text" placeholder="مثلاً: ۱۰ دقیقه مکث + درخواست روشن + یک اقدام کوچک...">
+          <small class="muted">بهتره کوچک، مشخص و قابل انجام باشه (۲–۱۵ دقیقه).</small>
+        </label>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn primary" id="toDeep4">ادامه</button>
+      </div>
+    </section>
+
+    <!-- Deep: Step 4 -->
+    <section class="screen hidden" data-screen="deep-4">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">تحلیل عمیق • ۴/۵</div>
+      </div>
+      <h2>گفتگوی درونی (TA/Parts) + ریشه</h2>
+
+      <div class="grid">
+        <label class="field">
+          <span>صدای غالب توی سرم شبیه کدومه؟</span>
+          <select id="ddVoice">
+            <option value="">— انتخاب کن —</option>
+            <option>والدِ منتقد</option>
+            <option>والدِ حمایتگر</option>
+            <option>کودکِ ترسیده/آسیب‌پذیر</option>
+            <option>کودکِ سرکش/خشمگین</option>
+            <option>بالغِ منطقی</option>
+            <option>نامشخص</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>این حس «آشناست»؟ اولین بار کی یادته؟</span>
+          <input id="ddFirst" type="text" placeholder="مثلاً: دوران مدرسه، موقع مقایسه شدن...">
+        </label>
+      </div>
+
+      <label class="field">
+        <span>یک جملهٔ بالغِ جایگزین (ضد-شرم/ضد-فاجعه‌سازی)</span>
+        <input id="ddAdult" type="text" placeholder="مثلاً: نتیجهٔ امروز = ارزش من نیست.">
+      </label>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn primary" id="toDeep5">ادامه</button>
+      </div>
+    </section>
+
+    <!-- Deep: Step 5 -->
+    <section class="screen hidden" data-screen="deep-5">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">تحلیل عمیق • ۵/۵</div>
+      </div>
+      <h2>انتخاب تکنیک + پلن عمل</h2>
+
+      <div class="card" id="ddRecommendation"></div>
+
+      <h3>تکنیک پیشنهادی</h3>
+      <div id="ddToolChips" class="chips"></div>
+      <div class="card" id="ddToolInfo"></div>
+
+      <div class="grid">
+        <label class="field">
+          <span>تمرین را همین الان انجام دادم؟</span>
+          <select id="ddDidTool">
+            <option value="yes">بله</option>
+            <option value="no">نه (فقط انتخاب کردم)</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>مدت تمرین (دقیقه)</span>
+          <input id="ddMinutes" type="number" min="0" max="120" value="5">
+        </label>
+      </div>
+
+      <div class="grid">
+        <label class="field">
+          <span>این تکنیک چقدر کمک کرد؟ (۰ تا ۵)</span>
+          <input id="ddHelpfulness" type="range" min="0" max="5" value="3">
+          <div class="rangeRow"><span id="ddHelpfulnessVal" class="badge">3</span><span class="muted">۰ = هیچ • ۵ = خیلی</span></div>
+        </label>
+        <label class="field">
+          <span>چقدر سخت بود؟ (۰ تا ۵)</span>
+          <input id="ddDifficulty" type="range" min="0" max="5" value="2">
+          <div class="rangeRow"><span id="ddDifficultyVal" class="badge">2</span><span class="muted">۰ = راحت • ۵ = سخت</span></div>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>پلن عملِ کوچک (امروز)</span>
+        <textarea id="ddPlan" rows="3" placeholder="۱) ... (۵–۱۵ دقیقه)
+۲) ... (اگر نیاز به مرز/گفتگو هست)"></textarea>
+      </label>
+
+      <h3>وضعیت اقدام</h3>
+      <div id="ddActionPills" class="pills"></div>
+      <label class="field hidden" id="ddBlockerWrap">
+        <span>اگر انجام نشد، مانع چی بود؟ (اختیاری)</span>
+        <input id="ddBlocker" type="text" placeholder="مثلاً: اهمال، ترس، عدم انرژی...">
+      </label>
+
+      <div class="grid">
+        <label class="field">
+          <span>شدت بعد از تنظیم (۰ تا ۱۰)</span>
+          <input id="ddAfter" type="range" min="0" max="10" value="4">
+          <div class="rangeRow"><span id="ddAfterVal" class="badge">4</span><span class="muted">برای ارزیابی اثر تکنیک</span></div>
+        </label>
+        <label class="field">
+          <span>اگر دوباره رخ بده، دفعه بعد چه می‌کنم؟</span>
+          <input id="ddNextTime" type="text" placeholder="مثلاً: قبل از مقایسه، ۶۰ ثانیه تنظیم بدن...">
+        </label>
+      </div>
+
+      <div class="card">
+        <h3>یادآوری هویت (اصل/بهبود/موهبت)</h3>
+        <p class="helper">این بخش کمک می‌کند «پلن» فقط یک کار نباشد؛ یک انتخاب هم‌راستا با ارزش‌ها و رشد تو باشد. (اختیاری)</p>
+
+        <h4>اصل زندگی</h4>
+        <div id="ddPrincipleChips" class="chips"></div>
+        <div id="ddPrincipleSelected" class="selected">—</div>
+        <div class="inline-add">
+          <input id="ddPrincipleInput" type="text" placeholder="افزودن اصل جدید (اختیاری)...">
+          <button id="ddPrincipleAdd" class="btn">افزودن</button>
+        </div>
+
+        <h4 style="margin-top:12px">نقطه بهبود</h4>
+        <div id="ddImprovementChips" class="chips"></div>
+        <div id="ddImprovementSelected" class="selected">—</div>
+        <div class="inline-add">
+          <input id="ddImprovementInput" type="text" placeholder="افزودن نقطه بهبود (اختیاری)...">
+          <button id="ddImprovementAdd" class="btn">افزودن</button>
+        </div>
+
+        <h4 style="margin-top:12px">موهبت/دستاورد</h4>
+        <div id="ddAchievementChips" class="chips"></div>
+        <div id="ddAchievementSelected" class="selected">—</div>
+        <div class="inline-add">
+          <input id="ddAchievementInput" type="text" placeholder="افزودن موهبت/دستاورد (اختیاری)...">
+          <button id="ddAchievementAdd" class="btn">افزودن</button>
+        </div>
+
+        <div class="smallnote muted">اگر ترجیح می‌دی این لیست‌ها را جدا مدیریت کنی، از آیکون‌های بالای صفحه استفاده کن.</div>
+      </div>
+
+      <div class="row wrap">
+        <button class="btn" id="ddCopy">کپی خلاصه</button>
+        <button class="btn" id="ddShare">اشتراک</button>
+        <button class="btn primary" id="ddSave">ذخیره</button>
+      </div>
+
+      <pre id="ddSummary" class="summary"></pre>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn" id="ddGoHome">خانه</button>
+      </div>
+    </section>
+
+    <!-- Toolkit -->
+    <section class="screen hidden" data-screen="toolkit">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">جعبه ابزار</div>
+      </div>
+      <h2>تکنیک‌های کوتاه تنظیم هیجان</h2>
+      <p class="helper">این‌ها جای درمان نیستند، اما برای مدیریت روزمره خیلی کمک می‌کنند. اگر علائم شدید/طولانی داری، کمک حرفه‌ای بهترین گزینه است.</p>
+
+      <div id="tkList" class="grid2"></div>
+
+      <div class="card">
+        <h3>قانون Cooldown</h3>
+        <div class="helper">اگر شدت احساس بالای <b>۶/۱۰</b> است، تصمیم‌های مهم (مثلاً ترید/پیام حساس/بحث جدی) را <b>تعویق</b> بده. اول تنظیم، بعد تصمیم.</div>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn" id="tkGoHome">خانه</button>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section class="screen hidden" data-screen="history">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">سوابق و الگوها</div>
+      </div>
+      <h2>سوابق ذخیره‌شده</h2>
+
+      <div class="row wrap">
+        <select id="hxFilter" class="btn">
+          <option value="all">همه</option>
+          <option value="quick">ثبت سریع</option>
+          <option value="deep">تحلیل عمیق</option>
+          <option value="guided">فلوی فوری</option>
+          <option value="savor">فقط لحظه‌های خوب</option>
+        </select>
+        <button class="btn" id="hxRefresh">بروزرسانی</button>
+      </div>
+
+      <div class="card">
+        <h3>الگوهای ساده</h3>
+        <div id="hxStats" class="helper">—</div>
+      </div>
+
+      <div class="card">
+        <h3>اثر تکنیک‌ها روی تو</h3>
+        <div class="helper">میانگینِ «کاهش شدت» بعد از تکنیک. (هرچه بیشتر رکورد بزنی، دقیق‌تر می‌شه)</div>
+        <div id="hxToolsEffect"></div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>تریگرهای پرتکرار</h3>
+          <div id="hxTopTriggers" class="helper">—</div>
+        </div>
+        <div class="card">
+          <h3>بدن کجا بیشتر واکنش می‌ده؟</h3>
+          <div id="hxBodyMap" class="helper">—</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>الگوی زمانی</h3>
+        <div id="hxTimes" class="helper">—</div>
+      </div>
+
+      <div id="hxList" class="store"></div>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn" id="hxGoHome">خانه</button>
+      </div>
+    </section>
+
+    <!-- Guided flows: Step 1 -->
+    <section class="screen hidden" data-screen="guided-1">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">فلوی فوری • ۱/۳</div>
+      </div>
+      <h2 id="gdTitle">فلوی فوری</h2>
+      <p class="helper" id="gdIntro">—</p>
+
+      <h3>هدف</h3>
+      <div id="gdGoalChips" class="chips"></div>
+
+      <h3>اول تنظیم هیجان یا حل مسئله؟</h3>
+      <p class="helper">در فلوهای فوری معمولاً «تنظیم هیجان» اولویت دارد، ولی اگر مسئله بیرونی مشخص است می‌تونی «حل مسئله» را هم انتخاب کنی.</p>
+      <div id="gdModeChips" class="chips"></div>
+
+      <h3>چک آسیب‌پذیری (اختیاری)</h3>
+      <div id="gdVulnChips" class="chips"></div>
+
+      <div class="grid">
+        <label class="field">
+          <span>شدت الان (۰ تا ۱۰)</span>
+          <input id="gdIntensity" type="range" min="0" max="10" value="6">
+          <div class="rangeRow"><span id="gdIntensityVal" class="badge">6</span><span class="muted">۰ آرام • ۱۰ خیلی شدید</span></div>
+        </label>
+        <label class="field">
+          <span>بدن کجا حس می‌کنی؟</span>
+          <select id="gdBody"></select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>تریگر (اختیاری)</span>
+        <input id="gdTrigger" type="text" placeholder="مثلاً: یک پیام/یادآوری/فکر...">
+      </label>
+
+      <div id="gdSavorBlock" class="card hidden">
+        <h3>برای لحظه خوب ✨</h3>
+        <label class="field">
+          <span>چی خوب بود؟</span>
+          <textarea id="gdSavorMoment" rows="2" placeholder="مثلاً: یک گفت‌وگوی خوب، یک پیشرفت کوچک..."></textarea>
+        </label>
+        <label class="field">
+          <span>چرا برات مهم بود؟</span>
+          <input id="gdSavorWhy" type="text" placeholder="مثلاً: حس ارزشمندی/تعلق...">
+        </label>
+        <label class="field">
+          <span>چطور می‌تونم تکرارش کنم؟</span>
+          <input id="gdSavorRepeat" type="text" placeholder="مثلاً: ۲ دقیقه پیام قدردانی...">
+        </label>
+      </div>
+
+      <label class="field">
+        <span>فکر آسیب به خودت/دیگران داری؟</span>
+        <select id="gdHarm">
+          <option value="no">نه</option>
+          <option value="unsure">نامشخص/ترجیح می‌دم نگم</option>
+          <option value="yes">بله</option>
+        </select>
+      </label>
+
+      <div id="gdSafety" class="card hidden"></div>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn primary" id="toGuided2">ادامه</button>
+      </div>
+    </section>
+
+    <!-- Guided flows: Step 2 -->
+    <section class="screen hidden" data-screen="guided-2">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">فلوی فوری • ۲/۳</div>
+      </div>
+      <h2>تمرین کوتاه</h2>
+      <p class="helper">یکی را انتخاب کن و همین الان انجام بده. (هدف: ۶۰ تا ۱۸۰ ثانیه)</p>
+
+      <div id="gdToolChips" class="chips"></div>
+      <div class="card" id="gdToolInfo"></div>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn primary" id="toGuided3">ادامه</button>
+      </div>
+    </section>
+
+    <!-- Guided flows: Step 3 -->
+    <section class="screen hidden" data-screen="guided-3">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">فلوی فوری • ۳/۳</div>
+      </div>
+      <h2>اقدام کوچک + ذخیره</h2>
+      <p class="helper">حتی یک اقدام ۲ دقیقه‌ای، مغز را از «قفل» بیرون می‌آورد.</p>
+
+      <div class="grid">
+        <label class="field">
+          <span>تمرین را همین الان انجام دادم؟</span>
+          <select id="gdDidTool">
+            <option value="yes">بله</option>
+            <option value="no">نه (فقط انتخاب کردم)</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>مدت تمرین (دقیقه)</span>
+          <input id="gdMinutes" type="number" min="0" max="60" value="3">
+        </label>
+      </div>
+
+      <div class="grid">
+        <label class="field">
+          <span>این تمرین چقدر کمک کرد؟ (۰ تا ۵)</span>
+          <input id="gdHelpfulness" type="range" min="0" max="5" value="3">
+          <div class="rangeRow"><span id="gdHelpfulnessVal" class="badge">3</span><span class="muted">۰ = هیچ • ۵ = خیلی</span></div>
+        </label>
+        <label class="field">
+          <span>چقدر سخت بود؟ (۰ تا ۵)</span>
+          <input id="gdDifficulty" type="range" min="0" max="5" value="2">
+          <div class="rangeRow"><span id="gdDifficultyVal" class="badge">2</span><span class="muted">۰ = راحت • ۵ = سخت</span></div>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>اقدام ۲ دقیقه‌ای</span>
+        <input id="gdNextAction" type="text" placeholder="مثلاً: آب خوردن، قدم زدن، نوشتن ۳ جمله واقعیت...">
+      </label>
+
+      <div class="card">
+        <h3>یادآوری هویت (اختیاری)</h3>
+        <p class="helper">یک انتخاب کوچک هم‌راستا با «اصل زندگی» و «بهبود» کیفیت نتیجه را بیشتر می‌کند.</p>
+
+        <h4>اصل زندگی</h4>
+        <div id="gdPrincipleChips" class="chips"></div>
+        <div id="gdPrincipleSelected" class="selected">—</div>
+        <div class="inline-add">
+          <input id="gdPrincipleInput" type="text" placeholder="افزودن اصل جدید (اختیاری)...">
+          <button id="gdPrincipleAdd" class="btn">افزودن</button>
+        </div>
+
+        <h4 style="margin-top:12px">نقطه بهبود</h4>
+        <div id="gdImprovementChips" class="chips"></div>
+        <div id="gdImprovementSelected" class="selected">—</div>
+        <div class="inline-add">
+          <input id="gdImprovementInput" type="text" placeholder="افزودن نقطه بهبود (اختیاری)...">
+          <button id="gdImprovementAdd" class="btn">افزودن</button>
+        </div>
+
+        <h4 style="margin-top:12px">موهبت/دستاورد</h4>
+        <div id="gdAchievementChips" class="chips"></div>
+        <div id="gdAchievementSelected" class="selected">—</div>
+        <div class="inline-add">
+          <input id="gdAchievementInput" type="text" placeholder="افزودن موهبت/دستاورد (اختیاری)...">
+          <button id="gdAchievementAdd" class="btn">افزودن</button>
+        </div>
+      </div>
+
+      <h3>وضعیت اقدام</h3>
+      <div id="gdActionPills" class="pills"></div>
+      <label class="field hidden" id="gdBlockerWrap">
+        <span>اگر انجام نشد، مانع چی بود؟ (اختیاری)</span>
+        <input id="gdBlocker" type="text" placeholder="مثلاً: خستگی، ترس، وقت کم...">
+      </label>
+
+      <label class="field">
+        <span>شدت بعد از تمرین (۰ تا ۱۰)</span>
+        <input id="gdAfter" type="range" min="0" max="10" value="4">
+        <div class="rangeRow"><span id="gdAfterVal" class="badge">4</span><span class="muted">ثبت برای یادگیری شخصی</span></div>
+      </label>
+
+      <div class="row wrap">
+        <button class="btn" id="gdCopy">کپی خلاصه</button>
+        <button class="btn" id="gdShare">اشتراک</button>
+        <button class="btn primary" id="gdSave">ذخیره</button>
+      </div>
+
+      <pre id="gdSummary" class="summary"></pre>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn" id="gdGoHome">خانه</button>
+      </div>
+    </section>
+
+    <!-- Weekly goal -->
+    <section class="screen hidden" data-screen="weekly">
+      <div class="topbar">
+        <button class="btn" data-back>برگشت</button>
+        <div class="crumb">هدف هفتگی</div>
+      </div>
+      <h2>هدف هفتگی تنظیم</h2>
+      <p class="helper">این هدف «کم‌فشار» است: فقط تعداد دفعاتی که یک تمرین/تنظیم انجام می‌دی. (حتی ۲ دقیقه)</p>
+
+      <div class="grid">
+        <label class="field">
+          <span>تمرکز</span>
+          <select id="wkFocus">
+            <option value="any">هرکدام</option>
+            <option value="body">بدن/استرس</option>
+            <option value="mind">ذهن/فکر</option>
+            <option value="compassion">خودشفقت</option>
+            <option value="savor">لحظه خوب</option>
+            <option value="boundaries">رابطه/مرز</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>تعداد در هفته (۱ تا ۷)</span>
+          <input id="wkTarget" type="range" min="1" max="7" value="3">
+          <div class="rangeRow"><span id="wkTargetVal" class="badge">3</span><span class="muted">کم اما پایدار</span></div>
+        </label>
+      </div>
+
+      <div class="card">
+        <b>پیشرفت این هفته</b>
+        <div id="wkInfo" class="helper">—</div>
+        <div class="progress" aria-label="پیشرفت">
+          <div id="wkProgressBar" class="progress-bar" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="row wrap">
+        <button class="btn primary" id="wkSave">ذخیره تنظیمات</button>
+        <button class="btn danger" id="wkReset">بازنشانی</button>
+      </div>
+
+      <div class="nav-row">
+        <button class="btn" data-back>برگشت</button>
+        <button class="btn" id="wkGoHome">خانه</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <small>نسخه PWA آفلاین • همه‌چیز فقط روی دستگاه شما ذخیره می‌شود.</small>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
+
+<!-- ===================== Emotion List and New Strategy Recommendations ===================== -->
+
+<!-- Section for Emotion List Selection -->
+<div id="emotion-selection">
+    <h3>انتخاب احساسات</h3>
+    <ul id="emotion-list">
+        <!-- Dynamically populated emotion list from JS -->
+    </ul>
+</div>
+
+<!-- Section for Strategy Recommendations -->
+<div id="strategy-recommendations">
+    <h3>انتخاب راهبرد جدید</h3>
+    <div id="strategy-old">
+        <h4>راهبرد قدیمی</h4>
+        <select id="old-strategy-select">
+            <option value="Escape">فرار</option>
+            <option value="Control">کنترل‌گری</option>
+            <option value="Perfectionism">کمال‌گرایی</option>
+        </select>
+    </div>
+    <div id="strategy-new">
+        <h4>راهبرد جدید پیشنهادی</h4>
+        <ul id="new-strategy-list">
+            <!-- Dynamically populated new strategies -->
+        </ul>
+    </div>
+</div>
+
+<!-- Recommendation for Emotion Regulation vs Problem Solving -->
+<div id="recommendation">
+    <h3>توصیه‌ها</h3>
+    <p id="recommendation-text">لطفاً اول انتخاب کنید که آیا می‌خواهید تنظیم هیجان کنید یا مسئله را حل کنید.</p>
+    <button onclick="updateRecommendation('Emotion Regulation')">تنظیم هیجان</button>
+    <button onclick="updateRecommendation('Problem-Solving')">حل مسئله</button>
+</div>
+
+<script>
+// Populate emotion list dynamically
+const emotionList = window.emotionsList;
+const emotionListElement = document.getElementById("emotion-list");
+emotionList.forEach(emotion => {
+    let listItem = document.createElement("li");
+    listItem.textContent = emotion;
+    emotionListElement.appendChild(listItem);
+});
+
+// Update strategy recommendations based on selected old strategy
+const oldStrategySelect = document.getElementById("old-strategy-select");
+const newStrategyListElement = document.getElementById("new-strategy-list");
+
+oldStrategySelect.addEventListener("change", function() {
+    const selectedStrategy = this.value;
+    let newStrategiesHtml = "";
+
+    // Suggest new strategies based on old strategy selection
+    if (selectedStrategy === "Escape") {
+        newStrategiesHtml += "<li>" + window.newStrategies["Acceptance and Mindfulness"] + "</li>";
+        newStrategiesHtml += "<li>" + window.newStrategies["Problem-Solving"] + "</li>";
+    } else if (selectedStrategy === "Control") {
+        newStrategiesHtml += "<li>" + window.newStrategies["Boundary Setting"] + "</li>";
+        newStrategiesHtml += "<li>" + window.newStrategies["Acceptance and Mindfulness"] + "</li>";
+    } else if (selectedStrategy === "Perfectionism") {
+        newStrategiesHtml += "<li>" + window.newStrategies["Problem-Solving"] + "</li>";
+        newStrategiesHtml += "<li>" + window.newStrategies["Acceptance and Mindfulness"] + "</li>";
+    }
+
+    newStrategyListElement.innerHTML = newStrategiesHtml;
+});
+
+// Update recommendation message based on choice
+function updateRecommendation(choice) {
+    const recommendationText = document.getElementById("recommendation-text");
+    recommendationText.textContent = window.recommendNextStep(choice);
+}
+</script>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2563eb" />
+  <title>حس‌نگار — نقاط بهبود من</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="appbar">
+    <div class="appbar-row">
+      <div class="brand">
+        <a href="./index.html" class="brandlink">
+          <img src="./icon.svg" alt="حس‌نگار" class="logo">
+          <div>
+            <h1>حس‌نگار</h1>
+            <div class="subtitle">نقاط بهبود من</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="toplinks always" aria-label="میانبرها">
+        <a class="topicon" href="./achievements.html" title="دستاوردها و موهبت‌ها" >
+          <span class="sr-only">دستاوردها و موهبت‌ها</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M7 6H5a2 2 0 0 0 2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M17 6h2a2 2 0 0 1-2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a class="topicon" href="./principles.html" title="اصول زندگی من" >
+          <span class="sr-only">اصول زندگی من</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 7h6M9 11h6M9 15h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </a>
+        <a class="topicon active" href="./improvements.html" title="نقاط بهبود من" aria-current="page">
+          <span class="sr-only">نقاط بهبود من</span>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 3l2.2 6.8H21l-5.5 4 2.1 6.7L12 16.8 6.4 20.5 8.5 13.8 3 9.8h6.8L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </nav>
+
+      <nav class="actions">
+        <a class="btn ghost" href="./index.html">خانه</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>نقاط بهبود من</h2>
+      <p class="helper">تا ۱۰ مورد از مهارت‌ها/عادت‌هایی که می‌خواهی آرام‌آرام بهترشان کنی را بنویس. این‌ها «برچسب» نیستند؛ مسیر تمرین‌اند. داخل مسیر ثبت هم می‌تونی یکی را انتخاب کنی تا بدانی امروز دقیقاً روی چه چیزی تمرین می‌کنی.</p>
+
+      <label class="field">
+        <span>مورد جدید</span>
+        <textarea id="improvement-input" placeholder="مثلاً: وقتی عصبانی‌ام پیام نمی‌دهم..." rows="3"></textarea>
+      </label>
+
+      <div class="row wrap">
+        <button id="add-improvement" class="btn primary" type="button">افزودن</button>
+        <button id="reset-improvements" class="btn danger" type="button">پاک‌سازی</button>
+      </div>
+
+      <div class="smallnote">پیشنهاد: هر مورد را تا حد امکان «قابل رفتار» بنویس، نه کلی.</div>
+    </section>
+
+    <section class="card">
+      <h3>لیست</h3>
+      <div id="improvement-container" class="list"></div>
+      <div class="smallnote muted">برای حذف هر مورد از دکمه «حذف» استفاده کن.</div>
+    </section>
+  </main>
+
+  <script src="./improvements.js"></script>
+</body>
+</html>
