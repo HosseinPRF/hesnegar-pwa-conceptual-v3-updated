@@ -2653,39 +2653,3 @@
   }
 
 })();
-
-// ===================== Added logic for new strategies and emotion regulation vs problem-solving =====================
-
-// Define old strategies with brief explanations
-const oldStrategies = {
-    "Escape": "Escaping or avoiding feelings, such as withdrawing or distracting yourself to avoid the discomfort.",
-    "Control": "Trying to control situations and people around you when feeling anxious or unsafe, like micromanaging.",
-    "Perfectionism": "Striving for perfection and always seeking to do things flawlessly, often leading to stress and burnout."
-};
-
-// Define new strategies based on psychology science
-const newStrategies = {
-    "Acceptance and Mindfulness": "Learn to accept your feelings as they are, without judgment. Practice mindfulness to stay present and manage distress.",
-    "Boundary Setting": "Set healthy boundaries with others to protect your energy and maintain emotional well-being.",
-    "Problem-Solving": "Break down issues into manageable steps and focus on practical solutions to make progress and reduce stress."
-};
-
-// Emotion list for quick selection in deep registration
-const emotionsList = ["Anxiety", "Sadness", "Anger", "Frustration", "Joy", "Shame", "Fear", "Loneliness"];
-
-// Recommendations based on 'Emotion Regulation vs Problem-Solving' choice
-const recommendNextStep = (choice) => {
-    if (choice === 'Emotion Regulation') {
-        return "Try engaging in mindfulness or grounding exercises, focus on your breath or do a quick body scan to calm your mind.";
-    } else if (choice === 'Problem-Solving') {
-        return "Take a moment to clearly define the problem and break it down into smaller steps. Focus on what action you can take right now.";
-    } else {
-        return "Please choose either 'Emotion Regulation' or 'Problem-Solving' to get more tailored recommendations.";
-    }
-};
-
-// Export for use in other parts of the app
-window.oldStrategies = oldStrategies;
-window.newStrategies = newStrategies;
-window.emotionsList = emotionsList;
-window.recommendNextStep = recommendNextStep;

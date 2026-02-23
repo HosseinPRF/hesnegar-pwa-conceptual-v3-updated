@@ -1,4 +1,4 @@
-const CACHE = 'hesnegar-v5';
+const CACHE = 'hesnegar-v6';
 
 // App Shell (فایل‌هایی که باید آفلاین هم همیشه در دسترس باشند)
 const ASSETS = [
